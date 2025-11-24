@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialiser les événements
     initNavigation();
+    initMobileMenu();
     initSidebar();
     initProfile();
     initLayerControls();
@@ -99,14 +100,82 @@ function initNavigation() {
     }
 }
 
+// ============================================
+// MENU MOBILE HAMBURGER
+// ============================================
+function initMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMobileMenu = document.getElementById('closeMobileMenu');
+    const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
+    
+    // Créer l'overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'mobile-menu-overlay';
+    overlay.id = 'mobileMenuOverlay';
+    document.body.appendChild(overlay);
+    
+    // Ouvrir le menu
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+    
+    // Fermer le menu
+    function closeMobileMenuFunc() {
+        mobileMenu.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    if (closeMobileMenu) {
+        closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+    }
+    
+    // Fermer en cliquant sur l'overlay
+    overlay.addEventListener('click', closeMobileMenuFunc);
+    
+    // Navigation mobile
+    mobileNavButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetView = this.dataset.view;
+            
+            // Mettre à jour les boutons actifs dans le menu mobile
+            mobileNavButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            this.classList.add('active');
+            
+            // Naviguer
+            navigateTo(targetView);
+            
+            // Fermer le menu
+            closeMobileMenuFunc();
+        });
+    });
+}
+
 function navigateTo(viewName) {
     console.log(`📍 Navigation vers: ${viewName}`);
     
     const navButtons = document.querySelectorAll('.nav-btn');
+    const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
     const viewPanels = document.querySelectorAll('.view-panel');
     
-    // Mettre à jour les boutons actifs
+    // Mettre à jour les boutons actifs (desktop)
     navButtons.forEach(btn => {
+        if (btn.dataset.view === viewName) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    
+    // Mettre à jour les boutons actifs (mobile)
+    mobileNavButtons.forEach(btn => {
         if (btn.dataset.view === viewName) {
             btn.classList.add('active');
         } else {

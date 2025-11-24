@@ -2,7 +2,10 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Ibrahimakhalil Mbacke | Géomaticien & Développeur WebMapping</title>
     
     <!-- Leaflet CSS -->
@@ -48,12 +51,45 @@
             </button>
         </nav>
         <div class="toolbar-right">
+            <button class="tool-btn mobile-menu-btn" id="mobileMenuBtn" title="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
             <button class="tool-btn" id="layersPanel" title="Panneau des couches">☰</button>
             <button class="tool-btn" id="profileBtn" title="Profil">
                 <i class="fas fa-user"></i>
             </button>
         </div>
     </header>
+
+    <!-- MENU MOBILE -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span>Navigation</span>
+            <button class="close-mobile-menu" id="closeMobileMenu">✕</button>
+        </div>
+        <nav class="mobile-menu-nav">
+            <button class="mobile-nav-btn active" data-view="home">
+                <span class="icon">🗺️</span>
+                <span>Accueil</span>
+            </button>
+            <button class="mobile-nav-btn" data-view="timeline">
+                <span class="icon">🌍</span>
+                <span>Parcours</span>
+            </button>
+            <button class="mobile-nav-btn" data-view="skills">
+                <span class="icon">📊</span>
+                <span>Compétences</span>
+            </button>
+            <button class="mobile-nav-btn" data-view="projects">
+                <span class="icon">🚀</span>
+                <span>Projets</span>
+            </button>
+            <button class="mobile-nav-btn" data-view="contact">
+                <span class="icon">📧</span>
+                <span>Contact</span>
+            </button>
+        </nav>
+    </div>
 
     <!-- PANNEAU LATÉRAL - Table des Matières -->
     <aside class="sidebar-panel" id="sidebarPanel">
