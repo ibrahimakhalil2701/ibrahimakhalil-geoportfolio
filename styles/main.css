@@ -1,0 +1,1816 @@
+/* ============================================
+   GEOPORTFOLIO V2 - STYLES PRINCIPAUX
+   Portfolio Géomatique Immersif
+   ============================================ */
+
+/* ============================================
+   VARIABLES CSS
+   ============================================ */
+:root {
+    /* Couleurs topographiques */
+    --topo-blue: #1E3A8A;
+    --forest-green: #166534;
+    --terrain-beige: #FEF3C7;
+    --urban-grey: #374151;
+    
+    /* Interface SIG */
+    --panel-dark: #1F2937;
+    --panel-darker: #0F172A;
+    --accent-cyan: #06B6D4;
+    --accent-orange: #F97316;
+    --accent-gold: #F59E0B;
+    
+    /* Couches thématiques */
+    --layer-vector: #3B82F6;
+    --layer-raster: #8B5CF6;
+    --layer-network: #EC4899;
+    --layer-poi: #EAB308;
+    --layer-formation: #3B82F6;
+    --layer-experience: #EF4444;
+    --layer-projet: #10B981;
+    --layer-origine: #F59E0B;
+    
+    /* Textes */
+    --text-light: #F9FAFB;
+    --text-grey: #94A3B8;
+    --text-dark: #0F172A;
+    
+    /* Autres */
+    --border-color: rgba(6, 182, 212, 0.2);
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--panel-darker);
+    color: var(--text-light);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--accent-orange);
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+/* ============================================
+   GRILLE CARTOGRAPHIQUE DE FOND
+   ============================================ */
+.map-grid-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 50px 50px; }
+}
+
+/* ============================================
+   HEADER - BARRE D'OUTILS SIG
+   ============================================ */
+.gis-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--panel-dark);
+    border-bottom: 2px solid var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+}
+
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent-cyan);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.logo:hover {
+    color: var(--accent-orange);
+    transform: scale(1.05);
+}
+
+.coordinate-icon {
+    font-size: 1.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.toolbar-nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.nav-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-grey);
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-btn:hover {
+    background: rgba(6, 182, 212, 0.1);
+    color: var(--accent-cyan);
+    border-color: var(--accent-cyan);
+}
+
+.nav-btn.active {
+    background: var(--accent-cyan);
+    color: var(--panel-darker);
+    border-color: var(--accent-cyan);
+}
+
+.tool-btn {
+    background: rgba(6, 182, 212, 0.1);
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.tool-btn:hover {
+    background: var(--accent-cyan);
+    color: var(--panel-darker);
+    transform: scale(1.1);
+}
+
+/* ============================================
+   PANNEAU LATÉRAL - TABLE DES MATIÈRES
+   ============================================ */
+.sidebar-panel {
+    position: fixed;
+    left: -320px;
+    top: 60px;
+    width: 320px;
+    height: calc(100vh - 60px - 40px);
+    background: var(--panel-dark);
+    border-right: 2px solid var(--accent-cyan);
+    z-index: 900;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    box-shadow: var(--shadow);
+}
+
+.sidebar-panel.open {
+    left: 0;
+}
+
+.panel-header {
+    padding: 1.5rem;
+    background: var(--panel-darker);
+    border-bottom: 1px solid var(--accent-cyan);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.panel-header h3 {
+    color: var(--accent-cyan);
+    font-size: 1rem;
+}
+
+.close-panel {
+    background: transparent;
+    border: none;
+    color: var(--text-grey);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.close-panel:hover {
+    color: var(--accent-cyan);
+    transform: rotate(90deg);
+}
+
+.panel-content {
+    padding: 1rem;
+}
+
+/* ============================================
+   CONTRÔLES DE ZOOM PERSONNALISÉS SUR CARTES
+   ============================================ */
+.custom-zoom-controls {
+    position: absolute !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 1000 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.95), rgba(16, 185, 129, 0.95));
+    padding: 5px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    pointer-events: auto;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* S'assurer que le conteneur de la carte a position relative */
+.leaflet-map,
+.timeline-map,
+.hero-map-container {
+    position: relative !important;
+}
+
+.custom-zoom-btn {
+    width: 50px;
+    height: 50px;
+    background: rgba(15, 23, 42, 0.95);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    line-height: 1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.custom-zoom-btn:hover {
+    background: rgba(6, 182, 212, 1);
+    color: #0F172A;
+    transform: scale(1.15);
+    border-color: #fff;
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.6);
+}
+
+.custom-zoom-btn:active {
+    transform: scale(0.95);
+}
+
+/* Empêcher les contrôles Leaflet par défaut de bouger */
+.leaflet-control-zoom {
+    display: none !important;
+}
+
+.layer-group {
+    margin-bottom: 1.5rem;
+}
+
+.layer-group-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: rgba(6, 182, 212, 0.1);
+    border-radius: 6px;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.layer-group-header:hover {
+    background: rgba(6, 182, 212, 0.2);
+}
+
+.toggle-icon {
+    transition: transform 0.3s;
+}
+
+.layer-list {
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.layer-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.layer-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.layer-item input[type="checkbox"] {
+    cursor: pointer;
+}
+
+.layer-icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.layer-item label {
+    cursor: pointer;
+    color: var(--text-grey);
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   MODAL PROFIL
+   ============================================ */
+.profile-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.95);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.profile-modal.active {
+    display: flex;
+}
+
+.profile-content {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    background: var(--panel-dark);
+    border-radius: 12px;
+    border: 2px solid var(--accent-cyan);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.close-profile {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(239, 68, 68, 0.2);
+    border: none;
+    color: #EF4444;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 10;
+}
+
+.close-profile:hover {
+    background: #EF4444;
+    color: white;
+    transform: rotate(90deg);
+}
+
+.profile-card {
+    padding: 2rem;
+}
+
+.profile-photo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--layer-vector));
+    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+    margin-bottom: 1rem;
+}
+
+.profile-initials {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+}
+
+.profile-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(16, 185, 129, 0.1);
+    border-radius: 20px;
+    color: #10B981;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    background: #10B981;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.profile-info {
+    text-align: center;
+}
+
+.profile-info h2 {
+    color: var(--accent-cyan);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-title {
+    color: var(--text-grey);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.profile-location {
+    color: var(--text-grey);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 2rem 0;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-grey);
+    text-align: center;
+}
+
+.profile-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.social-btn.linkedin {
+    background: rgba(14, 118, 168, 0.2);
+    color: #0E76A8;
+    border: 1px solid #0E76A8;
+}
+
+.social-btn.linkedin:hover {
+    background: #0E76A8;
+    color: white;
+}
+
+.social-btn.github {
+    background: rgba(36, 41, 47, 0.2);
+    color: #24292F;
+    border: 1px solid #24292F;
+}
+
+.social-btn.github:hover {
+    background: #24292F;
+    color: white;
+}
+
+.social-btn.email {
+    background: rgba(239, 68, 68, 0.2);
+    color: #EF4444;
+    border: 1px solid #EF4444;
+}
+
+.social-btn.email:hover {
+    background: #EF4444;
+    color: white;
+}
+
+.social-btn.cv {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+    border: 1px solid #10B981;
+}
+
+.social-btn.cv:hover {
+    background: #10B981;
+    color: white;
+}
+
+/* ============================================
+   MAIN VIEWPORT
+   ============================================ */
+.map-viewport {
+    margin-top: 60px;
+    min-height: calc(100vh - 60px - 40px);
+    position: relative;
+}
+
+.view-panel {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.view-panel.active {
+    display: block;
+}
+
+/* ============================================
+   VUE ACCUEIL - HERO
+   ============================================ */
+.hero-map-container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 60px - 40px);
+    overflow: hidden;
+}
+
+#heroMap {
+    width: 100%;
+    height: 100%;
+}
+
+.leaflet-map {
+    width: 100%;
+    height: 100%;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.3) 0%,
+        rgba(15, 23, 42, 0.7) 50%,
+        rgba(15, 23, 42, 0.9) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.hero-content {
+    text-align: center;
+    padding: 2rem;
+    max-width: 900px;
+    pointer-events: auto;
+}
+
+.coordinate-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(6, 182, 212, 0.2);
+    border: 1px solid var(--accent-cyan);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.title-main {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+}
+
+.title-sub {
+    font-size: 1.5rem;
+    color: var(--text-grey);
+    font-weight: 400;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: var(--text-grey);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.stat-box {
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(31, 41, 55, 0.7);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    min-width: 120px;
+    transition: var(--transition);
+}
+
+.stat-box:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-grey);
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.cta-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.cta-btn.primary {
+    background: var(--accent-cyan);
+    color: var(--panel-darker);
+}
+
+.cta-btn.primary:hover {
+    background: var(--accent-orange);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+}
+
+.cta-btn.secondary {
+    background: transparent;
+    border: 2px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+.cta-btn.secondary:hover {
+    background: var(--accent-cyan);
+    color: var(--panel-darker);
+    transform: translateY(-2px);
+}
+
+/* Légende */
+.map-legend {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background: rgba(31, 41, 55, 0.95);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 8px;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+    z-index: 500;
+}
+
+.legend-header {
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.legend-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-grey);
+}
+
+.legend-symbol {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid white;
+}
+
+
+/* ============================================
+   TIMELINE GÉOGRAPHIQUE (SCROLLYTELLING)
+   ============================================ */
+.timeline-container {
+    padding: 3rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.timeline-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: var(--accent-cyan);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-grey);
+}
+
+/* ============================================
+   SCROLLYTELLING - CARTE STICKY + CONTENU
+   ============================================ */
+.scrollytelling-container {
+    position: relative;
+    min-height: 200vh; /* Permet le scroll */
+}
+
+.sticky-map-wrapper {
+    position: sticky;
+    top: 60px; /* Sous la navbar */
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+}
+
+.timeline-map {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+/* Styles pour les markers de la timeline */
+.timeline-marker {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-marker.active-marker {
+    filter: drop-shadow(0 0 15px currentColor) drop-shadow(0 0 30px currentColor);
+    animation: markerPulse 2s ease-in-out infinite;
+}
+
+@keyframes markerPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 0.9;
+    }
+}
+
+/* Effet de halo pour le marker actif */
+.leaflet-pane .active-marker::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, currentColor 0%, transparent 70%);
+    opacity: 0.3;
+    animation: haloExpand 2s ease-out infinite;
+}
+
+@keyframes haloExpand {
+    0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Overlay pour assombrir la carte en sticky mode */
+.map-overlay-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.3) 0%,
+        rgba(15, 23, 42, 0.5) 50%,
+        rgba(15, 23, 42, 0.7) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+.timeline-steps {
+    position: relative;
+    z-index: 2; /* Au-dessus de la carte */
+    display: flex;
+    flex-direction: column;
+    gap: 100vh; /* Chaque étape prend 1 viewport */
+    padding: 50vh 0; /* Padding pour commencer et finir */
+}
+
+.timeline-step {
+    display: flex;
+    gap: 2rem;
+    padding: 3rem;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.95);
+    border: 2px solid var(--accent-cyan);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    opacity: 0.7;
+    transition: all 0.6s ease;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.timeline-step.active {
+    opacity: 1;
+    transform: scale(1.05);
+    border-color: var(--accent-gold);
+    box-shadow: 0 30px 80px rgba(245, 158, 11, 0.4);
+}
+
+.timeline-step:hover {
+    opacity: 1;
+}
+
+.step-marker {
+    font-size: 3rem;
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(6, 182, 212, 0.2);
+    border: 3px solid var(--accent-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+}
+
+.timeline-step.active .step-marker {
+    background: rgba(245, 158, 11, 0.3);
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.8);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.step-header h3 {
+    font-size: 1.8rem;
+    color: var(--accent-cyan);
+}
+
+.step-year {
+    padding: 0.5rem 1rem;
+    background: rgba(6, 182, 212, 0.2);
+    border-radius: 20px;
+    color: var(--accent-cyan);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.step-body {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+}
+
+.step-image {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--border-color);
+}
+
+.placeholder-image {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--panel-dark), var(--panel-darker));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: var(--accent-cyan);
+}
+
+.step-info h4 {
+    color: var(--text-light);
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+}
+
+.step-info h4 i {
+    color: var(--accent-cyan);
+    margin-right: 0.5rem;
+}
+
+.step-address {
+    color: var(--text-grey);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.step-description {
+    color: var(--text-grey);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.step-description strong {
+    color: var(--text-light);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.step-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tag {
+    padding: 0.4rem 0.8rem;
+    background: rgba(6, 182, 212, 0.15);
+    color: var(--accent-cyan);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid var(--accent-cyan);
+}
+
+/* ============================================
+   COMPÉTENCES
+   ============================================ */
+.view-header {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(31, 41, 55, 0.3);
+    border-bottom: 2px solid var(--border-color);
+}
+
+.skills-container {
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2rem;
+}
+
+.skill-category {
+    background: rgba(31, 41, 55, 0.5);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: var(--transition);
+}
+
+.skill-category:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2);
+    transform: translateY(-5px);
+}
+
+.skill-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.skill-header i {
+    font-size: 2rem;
+    color: var(--accent-cyan);
+}
+
+.skill-header h3 {
+    font-size: 1.5rem;
+    color: var(--text-light);
+}
+
+.skill-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.skill-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.skill-name {
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.skill-bar {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange));
+    border-radius: 10px;
+    transition: width 1s ease;
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+}
+
+/* ============================================
+   PROJETS
+   ============================================ */
+.project-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    background: rgba(31, 41, 55, 0.5);
+    border: 2px solid var(--border-color);
+    color: var(--text-grey);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--accent-cyan);
+    color: var(--panel-darker);
+    border-color: var(--accent-cyan);
+    transform: translateY(-2px);
+}
+
+.projects-grid {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: rgba(31, 41, 55, 0.5);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent-cyan);
+    box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3);
+}
+
+.project-preview {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.mini-map {
+    width: 100%;
+    height: 100%;
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.05);
+}
+
+.project-overlay {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.project-type {
+    padding: 0.5rem 1rem;
+    background: rgba(6, 182, 212, 0.9);
+    color: var(--panel-darker);
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    backdrop-filter: blur(10px);
+}
+
+.project-content {
+    padding: 1.5rem;
+}
+
+.project-content h3 {
+    font-size: 1.4rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.project-description {
+    color: var(--text-grey);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tech-tag {
+    padding: 0.4rem 0.8rem;
+    background: rgba(6, 182, 212, 0.15);
+    color: var(--accent-cyan);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.project-btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: rgba(6, 182, 212, 0.2);
+    color: var(--accent-cyan);
+    border: 1px solid var(--accent-cyan);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.project-btn:hover {
+    background: var(--accent-cyan);
+    color: var(--panel-darker);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   CONTACT
+   ============================================ */
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 500px;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.contact-map-wrapper {
+    height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--accent-cyan);
+    box-shadow: var(--shadow);
+}
+
+#contactMap {
+    width: 100%;
+    height: 100%;
+}
+
+.contact-info-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-card {
+    background: rgba(31, 41, 55, 0.5);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    height: 100%;
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.info-header i {
+    font-size: 2rem;
+    color: var(--accent-cyan);
+}
+
+.info-header h3 {
+    font-size: 1.5rem;
+    color: var(--text-light);
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.info-item:hover {
+    background: rgba(6, 182, 212, 0.1);
+}
+
+.info-item i {
+    font-size: 1.5rem;
+    color: var(--accent-cyan);
+    margin-top: 0.25rem;
+}
+
+.info-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: var(--text-grey);
+    font-weight: 600;
+}
+
+.info-content a {
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+.info-content a:hover {
+    color: var(--accent-cyan);
+}
+
+.info-content span {
+    color: var(--text-light);
+    font-size: 1rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.social-link {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    transition: var(--transition);
+}
+
+.social-link.linkedin {
+    background: rgba(14, 118, 168, 0.2);
+    color: #0E76A8;
+    border: 2px solid #0E76A8;
+}
+
+.social-link.linkedin:hover {
+    background: #0E76A8;
+    color: white;
+    transform: scale(1.2) rotate(10deg);
+}
+
+.social-link.github {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid white;
+}
+
+.social-link.github:hover {
+    background: white;
+    color: var(--panel-darker);
+    transform: scale(1.2) rotate(-10deg);
+}
+
+.social-link.email {
+    background: rgba(239, 68, 68, 0.2);
+    color: #EF4444;
+    border: 2px solid #EF4444;
+}
+
+.social-link.email:hover {
+    background: #EF4444;
+    color: white;
+    transform: scale(1.2) rotate(10deg);
+}
+
+.social-link.cv {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10B981;
+    border: 2px solid #10B981;
+}
+
+.social-link.cv:hover {
+    background: #10B981;
+    color: white;
+    transform: scale(1.2) rotate(-10deg);
+}
+
+.availability-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 2px solid #10B981;
+    border-radius: 8px;
+    color: #10B981;
+    font-weight: 600;
+    margin-top: auto;
+}
+
+.badge-indicator {
+    width: 10px;
+    height: 10px;
+    background: #10B981;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+/* ============================================
+   STATUS BAR (FOOTER)
+   ============================================ */
+.status-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: var(--panel-dark);
+    border-top: 1px solid var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-grey);
+    z-index: 999;
+}
+
+.status-left,
+.status-center,
+.status-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.status-bar i {
+    color: var(--accent-cyan);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1200px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-map-wrapper {
+        height: 400px;
+    }
+    
+    .step-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+    
+    .skills-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .gis-toolbar {
+        padding: 0 1rem;
+    }
+    
+    .toolbar-nav {
+        display: none;
+    }
+    
+    .title-main {
+        font-size: 2rem;
+    }
+    
+    .title-sub {
+        font-size: 1.1rem;
+    }
+    
+    .hero-stats {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .stat-box {
+        min-width: 100px;
+    }
+    
+    .hero-cta {
+        flex-direction: column;
+    }
+    
+    .cta-btn {
+        width: 100%;
+    }
+    
+    .timeline-step {
+        flex-direction: column;
+    }
+    
+    .step-marker {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .step-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-filters {
+        flex-wrap: wrap;
+    }
+    
+    .map-legend {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+    }
+    
+    .profile-links {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 1rem;
+    }
+    
+    .coordinate-badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .title-main {
+        font-size: 1.5rem;
+    }
+    
+    .title-sub {
+        font-size: 0.9rem;
+    }
+    
+    .stat-value {
+        font-size: 1.8rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .timeline-container,
+    .skills-container,
+    .projects-grid,
+    .contact-container {
+        padding: 1rem;
+    }
+    
+    .status-bar {
+        font-size: 0.7rem;
+        padding: 0 0.5rem;
+    }
+}
+
+/* ============================================
+   ANIMATIONS PERSONNALISÉES
+   ============================================ */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-slide-in {
+    animation: slideIn 0.5s ease;
+}
+
+.animate-bounce-in {
+    animation: bounceIn 0.6s ease;
+}
+
+/* ============================================
+   FIX CONTRÔLES ZOOM LEAFLET
+   ============================================ */
+/* Empêcher les contrôles de zoom de passer au-dessus du sidebar */
+.leaflet-control-zoom {
+    z-index: 800 !important; /* Inférieur au sidebar (900) */
+    margin-top: 10px !important;
+    margin-left: 10px !important;
+}
+
+/* Quand le sidebar est ouvert, déplacer les contrôles */
+.sidebar-panel.active ~ .map-viewport .leaflet-control-zoom,
+.sidebar-panel.active ~ * .leaflet-control-zoom {
+    z-index: 800 !important;
+    opacity: 0.9;
+}
+
+/* S'assurer que le sidebar reste au-dessus */
+.sidebar-panel {
+    z-index: 900 !important;
+}
+
+/* Ajuster position sur mobile */
+@media (max-width: 768px) {
+    .leaflet-control-zoom {
+        margin-top: 60px !important;
+        margin-right: 10px !important;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    .gis-toolbar,
+    .sidebar-panel,
+    .status-bar,
+    .hero-cta,
+    .project-filters,
+    .tool-btn,
+    .nav-btn,
+    .sticky-map-container {
+        display: none !important;
+    }
+    
+    .map-viewport {
+        margin-top: 0;
+    }
+    
+    .view-panel {
+        display: block !important;
+        page-break-after: always;
+    }
+}
+
+

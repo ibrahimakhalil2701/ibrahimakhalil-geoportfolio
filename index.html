@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ibrahimakhalil Mbacke | Géomaticien & Développeur WebMapping</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Animate.css pour les animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS personnalisé -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/onboarding.css">
+</head>
+<body>
+    <!-- Grille cartographique de fond -->
+    <div class="map-grid-background"></div>
+
+    <!-- HEADER - Style barre d'outils SIG -->
+    <header class="gis-toolbar">
+        <div class="toolbar-left">
+            <div class="logo" id="logoHome">
+                <span class="coordinate-icon">📍</span>
+                <span class="logo-text">IM | GeoPortfolio</span>
+            </div>
+        </div>
+        <nav class="toolbar-nav">
+            <button class="nav-btn active" data-view="home">
+                <span class="icon">🗺️</span> Accueil
+            </button>
+            <button class="nav-btn" data-view="timeline">
+                <span class="icon">🌍</span> Parcours
+            </button>
+            <button class="nav-btn" data-view="skills">
+                <span class="icon">📊</span> Compétences
+            </button>
+            <button class="nav-btn" data-view="projects">
+                <span class="icon">🚀</span> Projets
+            </button>
+            <button class="nav-btn" data-view="contact">
+                <span class="icon">📧</span> Contact
+            </button>
+        </nav>
+        <div class="toolbar-right">
+            <button class="tool-btn" id="layersPanel" title="Panneau des couches">☰</button>
+            <button class="tool-btn" id="profileBtn" title="Profil">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- PANNEAU LATÉRAL - Table des Matières -->
+    <aside class="sidebar-panel" id="sidebarPanel">
+        <div class="panel-header">
+            <h3>📑 Couches Thématiques</h3>
+            <button class="close-panel" id="closeSidebar">✕</button>
+        </div>
+        <div class="panel-content">
+            
+            <div class="layer-group">
+                <div class="layer-group-header">
+                    <span class="toggle-icon">▼</span>
+                    <span>🗺️ Navigation</span>
+                </div>
+                <div class="layer-list">
+                    <div class="layer-item active" data-layer="formation">
+                        <input type="checkbox" checked id="layer-formation">
+                        <span class="layer-icon" style="background: #3B82F6;"></span>
+                        <label for="layer-formation">Formation</label>
+                    </div>
+                    <div class="layer-item" data-layer="experience">
+                        <input type="checkbox" checked id="layer-experience">
+                        <span class="layer-icon" style="background: #EF4444;"></span>
+                        <label for="layer-experience">Expérience</label>
+                    </div>
+                    <div class="layer-item" data-layer="projects">
+                        <input type="checkbox" checked id="layer-projects">
+                        <span class="layer-icon" style="background: #10B981;"></span>
+                        <label for="layer-projects">Projets</label>
+                    </div>
+                    <div class="layer-item" data-layer="origine">
+                        <input type="checkbox" checked id="layer-origine">
+                        <span class="layer-icon" style="background: #F59E0B;"></span>
+                        <label for="layer-origine">Origines</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- PANNEAU PROFIL (MODAL) -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-content">
+            <button class="close-profile" id="closeProfile">✕</button>
+            <div class="profile-card">
+                <div class="profile-photo-container">
+                    <div class="profile-photo">
+                        <div class="profile-initials">IM</div>
+                    </div>
+                    <div class="profile-status">
+                        <span class="status-indicator"></span>
+                        Disponible
+                    </div>
+                </div>
+                <div class="profile-info">
+                    <h2>Ibrahimakhalil Mbacke</h2>
+                    <p class="profile-title">Géomaticien & Développeur WebMapping</p>
+                    <p class="profile-location">📍 Montréal, QC, Canada</p>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">2+</span>
+                            <span class="stat-label">Années d'expérience</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">Projets complétés</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Continents</span>
+                        </div>
+                    </div>
+                    <div class="profile-links">
+                        <a href="https://www.linkedin.com/in/ibrahimakhalil-mbacke" target="_blank" class="social-btn linkedin">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/ibrahimakhalil2701" target="_blank" class="social-btn github">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="mailto:ibrahimakhalilmbacke2000@gmail.com" class="social-btn email">
+                            <i class="fas fa-envelope"></i> Email
+                        </a>
+                        <a href="#" class="social-btn cv" id="downloadCV">
+                            <i class="fas fa-file-pdf"></i> CV PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="map-viewport">
+        
+        <!-- VUE ACCUEIL -->
+        <section id="homeView" class="view-panel active">
+            <div class="hero-map-container">
+                <div id="heroMap" class="leaflet-map"></div>
+                <div class="hero-overlay">
+                    <div class="hero-content animate__animated animate__fadeIn">
+                        <div class="coordinate-badge">
+                            <span class="coord-label">POSITION:</span>
+                            <span class="coord-value">45.5017°N, 73.5673°W</span>
+                        </div>
+                        <h1 class="hero-title">
+                            <span class="title-main">IBRAHIMAKHALIL MBACKE</span>
+                            <span class="title-sub">Géomaticien | Analyste SIG | Développeur WebMapping</span>
+                        </h1>
+                        <p class="hero-description">
+                            Spécialiste en analyse spatiale, visualisation de données géographiques et développement d'applications web cartographiques. 
+                            De Dakar à Montréal, en passant par Paris, mon parcours est une carte vivante de la géomatique moderne.
+                        </p>
+                        <div class="hero-stats">
+                            <div class="stat-box">
+                                <div class="stat-value">8+</div>
+                                <div class="stat-label">Outils SIG</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">10+</div>
+                                <div class="stat-label">Projets</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">3</div>
+                                <div class="stat-label">Continents</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">4</div>
+                                <div class="stat-label">Langues</div>
+                            </div>
+                        </div>
+                        <div class="hero-cta">
+                            <button class="cta-btn primary" onclick="navigateTo('projects')">
+                                <i class="fas fa-rocket"></i> Voir mes projets
+                            </button>
+                            <button class="cta-btn secondary" onclick="navigateTo('contact')">
+                                <i class="fas fa-envelope"></i> Me contacter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Légende -->
+            <div class="map-legend">
+                <div class="legend-header">📊 LÉGENDE</div>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="legend-symbol" style="background: #3B82F6;"></span>
+                        <span>Formation</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-symbol" style="background: #EF4444;"></span>
+                        <span>Expérience</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-symbol" style="background: #10B981;"></span>
+                        <span>Projets</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-symbol" style="background: #F59E0B;"></span>
+                        <span>Origines</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VUE TIMELINE GÉOGRAPHIQUE (SCROLLYTELLING) -->
+        <section id="timelineView" class="view-panel">
+            <div class="timeline-container">
+                <div class="timeline-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-globe-americas"></i>
+                        Mon Parcours Géographique
+                    </h2>
+                    <p class="section-subtitle">
+                        De Dakar à Montréal : une trajectoire à travers trois continents
+                    </p>
+                </div>
+
+                <!-- Container pour effet scrollytelling -->
+                <div class="scrollytelling-container">
+                    <!-- Carte sticky en arrière-plan -->
+                    <div class="sticky-map-wrapper">
+                        <div id="timelineMap" class="timeline-map"></div>
+                        <div class="map-overlay-gradient"></div>
+                    </div>
+
+                    <!-- Étapes du parcours qui défilent par-dessus -->
+                    <div class="timeline-steps">
+                    
+                    <!-- SÉNÉGAL - ORIGINES -->
+                    <div class="timeline-step" data-location="dakar">
+                        <div class="step-marker">🏠</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h3>Dakar, Sénégal</h3>
+                                <span class="step-year">Origines</span>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-image">
+                                    <div class="placeholder-image">
+                                        <i class="fas fa-mosque"></i>
+                                    </div>
+                                </div>
+                                <div class="step-info">
+                                    <h4><i class="fas fa-university"></i> UCAD - Université Cheikh Anta Diop</h4>
+                                    <p class="step-address">📍 Avenue Cheikh Anta Diop, Dakar, Sénégal</p>
+                                    <p class="step-description">
+                                        Première formation universitaire au Sénégal. Découverte de la géographie et de l'aménagement du territoire.
+                                        Base solide en sciences géographiques et développement d'une passion pour l'analyse spatiale.
+                                    </p>
+                                    <div class="step-tags">
+                                        <span class="tag">Géographie</span>
+                                        <span class="tag">Cartographie</span>
+                                        <span class="tag">Aménagement</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FRANCE - PARIS -->
+                    <div class="timeline-step" data-location="paris">
+                        <div class="step-marker">🎓</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h3>Paris, France</h3>
+                                <span class="step-year">2020 - 2023</span>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-image">
+                                    <div class="placeholder-image">
+                                        <i class="fas fa-landmark"></i>
+                                    </div>
+                                </div>
+                                <div class="step-info">
+                                    <h4><i class="fas fa-university"></i> Sorbonne Université</h4>
+                                    <p class="step-address">📍 Paris 18e / Quartier Latin, Paris, France</p>
+                                    <p class="step-description">
+                                        <strong>Licence en Géographie et Aménagement</strong><br>
+                                        Formation approfondie en géomatique, SIG et analyse spatiale. Développement de compétences en 
+                                        cartographie numérique, télédétection et bases de données spatiales.
+                                    </p>
+                                    <div class="step-tags">
+                                        <span class="tag">SIG</span>
+                                        <span class="tag">Cartographie</span>
+                                        <span class="tag">Télédétection</span>
+                                        <span class="tag">ArcGIS</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FRANCE - TOURS (STAGE) -->
+                    <div class="timeline-step" data-location="tours">
+                        <div class="step-marker">💼</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h3>Tours, France</h3>
+                                <span class="step-year">Avril - Juin 2023</span>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-image">
+                                    <div class="placeholder-image">
+                                        <i class="fas fa-city"></i>
+                                    </div>
+                                </div>
+                                <div class="step-info">
+                                    <h4><i class="fas fa-building"></i> Ville de Tours - Service SIG</h4>
+                                    <p class="step-address">📍 Hôtel de Ville, Place Jean Jaurès, 37000 Tours, France</p>
+                                    <p class="step-description">
+                                        <strong>Stage en Géomatique Municipale</strong><br>
+                                        Gestion de données cadastrales, mise à jour de bases de données géographiques, 
+                                        production de cartes thématiques pour les services municipaux. Utilisation d'ArcGIS Pro 
+                                        et ArcGIS Online pour la gestion du territoire urbain.
+                                    </p>
+                                    <div class="step-tags">
+                                        <span class="tag">ArcGIS Pro</span>
+                                        <span class="tag">Cadastre</span>
+                                        <span class="tag">SIG Municipal</span>
+                                        <span class="tag">GPS</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CANADA - MONTRÉAL (UQAM) -->
+                    <div class="timeline-step" data-location="montreal-uqam">
+                        <div class="step-marker">🎓</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h3>Montréal, Canada</h3>
+                                <span class="step-year">2023 - 2025</span>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-image">
+                                    <div class="placeholder-image">
+                                        <i class="fas fa-school"></i>
+                                    </div>
+                                </div>
+                                <div class="step-info">
+                                    <h4><i class="fas fa-university"></i> UQAM - Département de Géographie</h4>
+                                    <p class="step-address">📍 405 rue Sainte-Catherine Est, Montréal, QC H2L 2C4</p>
+                                    <p class="step-description">
+                                        <strong>Maîtrise en Sciences Géographiques - Spécialisation SIG</strong><br>
+                                        Formation avancée en géomatique, programmation SIG, analyse spatiale et développement web. 
+                                        Projet de maîtrise : Création d'un géoportail national pour le Mali avec technologies open source.
+                                    </p>
+                                    <div class="step-tags">
+                                        <span class="tag">Python</span>
+                                        <span class="tag">PostGIS</span>
+                                        <span class="tag">Leaflet</span>
+                                        <span class="tag">Docker</span>
+                                        <span class="tag">WebMapping</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CANADA - WSP -->
+                    <div class="timeline-step" data-location="montreal-wsp">
+                        <div class="step-marker">💼</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h3>Montréal, Canada</h3>
+                                <span class="step-year">Sept. - Déc. 2024</span>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-image">
+                                    <div class="placeholder-image">
+                                        <i class="fas fa-industry"></i>
+                                    </div>
+                                </div>
+                                <div class="step-info">
+                                    <h4><i class="fas fa-briefcase"></i> WSP Canada - Stage en Géomatique Climatique</h4>
+                                    <p class="step-address">📍 1600 Boulevard René-Lévesque Ouest, Montréal, QC</p>
+                                    <p class="step-description">
+                                        <strong>Analyse Climatique des Infrastructures Énergétiques</strong><br>
+                                        En collaboration avec HEC Montréal (projet FRQ). Analyse spatiale des impacts climatiques 
+                                        sur les infrastructures critiques. Traitement de données raster, modélisation spatiale 
+                                        et visualisation de scénarios climatiques avec Python, QGIS et ArcGIS Pro.
+                                    </p>
+                                    <div class="step-tags">
+                                        <span class="tag">Python</span>
+                                        <span class="tag">QGIS</span>
+                                        <span class="tag">Analyse Climatique</span>
+                                        <span class="tag">Rasterio</span>
+                                        <span class="tag">Modélisation</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CANADA - HEC -->
+                    <div class="timeline-step" data-location="montreal-hec">
+                        <div class="step-marker">🔬</div>
+                        <div class="step-content">
+                            <div class="step-header">
+                                <h3>Montréal, Canada</h3>
+                                <span class="step-year">2024</span>
+                            </div>
+                            <div class="step-body">
+                                <div class="step-image">
+                                    <div class="placeholder-image">
+                                        <i class="fas fa-flask"></i>
+                                    </div>
+                                </div>
+                                <div class="step-info">
+                                    <h4><i class="fas fa-university"></i> HEC Montréal - Projet de Recherche FRQ</h4>
+                                    <p class="step-address">📍 3000 Chemin de la Côte-Sainte-Catherine, Montréal, QC</p>
+                                    <p class="step-description">
+                                        <strong>Analyse Géospatiale des Risques Climatiques</strong><br>
+                                        Collaboration avec WSP dans le cadre d'un projet financé par le FRQ (Fonds de Recherche du Québec). 
+                                        Développement de modèles d'analyse spatiale pour évaluer la vulnérabilité des infrastructures 
+                                        énergétiques face aux changements climatiques.
+                                    </p>
+                                    <div class="step-tags">
+                                        <span class="tag">Recherche</span>
+                                        <span class="tag">Modélisation</span>
+                                        <span class="tag">Analyse de risque</span>
+                                        <span class="tag">Python</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Fin scrollytelling-container -->
+                
+            </div>
+        </section>
+
+        <!-- VUE COMPÉTENCES -->
+        <section id="skillsView" class="view-panel">
+            <div class="view-header">
+                <h2 class="section-title">
+                    <i class="fas fa-layer-group"></i>
+                    Compétences Géomatiques
+                </h2>
+                <p class="section-subtitle">Couches Thématiques de Connaissances</p>
+            </div>
+            
+            <div class="skills-container">
+                <!-- SIG Desktop -->
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-desktop"></i>
+                        <h3>SIG Desktop</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-name">ArcGIS Pro</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">QGIS</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">ArcGIS Online</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">FME</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WebMapping -->
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-globe"></i>
+                        <h3>WebMapping</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-name">Leaflet.js</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">MapLibre GL</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Mapbox</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">OpenLayers</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Programmation -->
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Programmation</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-name">Python (GeoPandas, Rasterio)</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">JavaScript</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">SQL / PostGIS</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">R</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bases de Données -->
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-database"></i>
+                        <h3>Bases de Données</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-name">PostGIS</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">PostgreSQL</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">GeoPackage</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">SpatiaLite</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analyse Spatiale -->
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-chart-area"></i>
+                        <h3>Analyse Spatiale</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-name">Analyse Raster</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Network Analysis</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Statistiques Spatiales</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Géotraitement</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Télédétection -->
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <i class="fas fa-satellite"></i>
+                        <h3>Télédétection</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-name">Traitement d'images satellites</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Indices spectraux (NDVI, NDWI)</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Classification supervisée</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Google Earth Engine</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VUE PROJETS -->
+        <section id="projectsView" class="view-panel">
+            <div class="view-header">
+                <h2 class="section-title">
+                    <i class="fas fa-rocket"></i>
+                    Projets Géospatiaux
+                </h2>
+                <p class="section-subtitle">Portfolio de réalisations en géomatique et webmapping</p>
+            </div>
+
+            <!-- Filtres de projets -->
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th"></i> Tous
+                </button>
+                <button class="filter-btn" data-filter="webmapping">
+                    <i class="fas fa-globe"></i> WebMapping
+                </button>
+                <button class="filter-btn" data-filter="analyse">
+                    <i class="fas fa-chart-bar"></i> Analyse
+                </button>
+                <button class="filter-btn" data-filter="automation">
+                    <i class="fas fa-robot"></i> Automatisation
+                </button>
+                <button class="filter-btn" data-filter="recherche">
+                    <i class="fas fa-flask"></i> Recherche
+                </button>
+            </div>
+
+            <div class="projects-grid">
+                
+                <!-- PROJET 1: Géoportail Mali -->
+                <div class="project-card" data-category="webmapping recherche">
+                    <div class="project-preview">
+                        <div class="mini-map" id="projectMap1"></div>
+                        <div class="project-overlay">
+                            <span class="project-type">WebMapping</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Géoportail National du Mali</h3>
+                        <p class="project-description">
+                            Projet de maîtrise : Développement d'un géoportail national avec architecture full-stack. 
+                            Plateforme de visualisation et d'analyse de données géospatiales pour le Mali.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fab fa-python"></i> Python</span>
+                            <span class="tech-tag"><i class="fas fa-map"></i> Leaflet</span>
+                            <span class="tech-tag"><i class="fas fa-database"></i> PostGIS</span>
+                            <span class="tech-tag"><i class="fab fa-docker"></i> Docker</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/ibrahimakhalil2701/Geoportail_Mali" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <button class="project-btn" onclick="showProjectDetails('mali')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 2: Analyse Multimodale Montréal -->
+                <div class="project-card" data-category="analyse">
+                    <div class="project-preview">
+                        <div class="mini-map" id="projectMap2"></div>
+                        <div class="project-overlay">
+                            <span class="project-type">Analyse</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Analyse Multimodale : STM vs BIXI</h3>
+                        <p class="project-description">
+                            Analyse comparative de l'efficacité et de la couverture de deux modes de transport à Montréal. 
+                            Évaluation de l'accessibilité géographique des réseaux BIXI (vélos) et STM (transport en commun).
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fas fa-map-marked"></i> QGIS</span>
+                            <span class="tech-tag"><i class="fab fa-python"></i> Python</span>
+                            <span class="tech-tag"><i class="fas fa-project-diagram"></i> Network Analyst</span>
+                            <span class="tech-tag"><i class="fas fa-draw-polygon"></i> Buffer Analysis</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/ibrahimakhalil2701/Analyse-Spatiale-Comparative-Multimodale---Montr-al-STM-vs-BIXI-QGIS" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <button class="project-btn" onclick="showProjectDetails('bixi')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 3: Statistiques Zonales Python -->
+                <div class="project-card" data-category="automation analyse">
+                    <div class="project-preview">
+                        <div class="mini-map" id="projectMap3"></div>
+                        <div class="project-overlay">
+                            <span class="project-type">Automatisation</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Outil Python d'Analyse Zonale</h3>
+                        <p class="project-description">
+                            Script Python automatisé pour l'analyse zonale de données climatiques et géographiques. 
+                            Calcul de statistiques par zones géographiques avec GeoPandas et Rasterio.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fab fa-python"></i> Python</span>
+                            <span class="tech-tag"><i class="fas fa-code"></i> GeoPandas</span>
+                            <span class="tech-tag"><i class="fas fa-chart-line"></i> Rasterio</span>
+                            <span class="tech-tag"><i class="fas fa-file-code"></i> NumPy</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/ibrahimakhalil2701/SIG-statistiques-zonales-Python-" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <button class="project-btn" onclick="showProjectDetails('zonales')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 4: Pistes Cyclables Montréal -->
+                <div class="project-card" data-category="webmapping analyse">
+                    <div class="project-preview">
+                        <div class="mini-map" id="projectMap4"></div>
+                        <div class="project-overlay">
+                            <span class="project-type">WebMapping</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Réseau Cyclable de Montréal</h3>
+                        <p class="project-description">
+                            Analyse, traitement et visualisation web des pistes cyclables de Montréal. 
+                            Application web interactive pour explorer le réseau cyclable et analyser la connectivité.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fab fa-js"></i> JavaScript</span>
+                            <span class="tech-tag"><i class="fas fa-map"></i> Leaflet</span>
+                            <span class="tech-tag"><i class="fab fa-python"></i> Python</span>
+                            <span class="tech-tag"><i class="fas fa-database"></i> GeoJSON</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/ibrahimakhalil2701/pistes-cyclables-montreal" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <button class="project-btn" onclick="showProjectDetails('velo')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 5: GDAL Docker -->
+                <div class="project-card" data-category="automation">
+                    <div class="project-preview">
+                        <div class="mini-map" id="projectMap5"></div>
+                        <div class="project-overlay">
+                            <span class="project-type">DevOps</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Environnement GDAL Docker</h3>
+                        <p class="project-description">
+                            Conteneur Docker configuré pour GDAL comme alternative gratuite à FME. 
+                            Environnement portable pour le traitement et la transformation de données géospatiales.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fab fa-docker"></i> Docker</span>
+                            <span class="tech-tag"><i class="fas fa-terminal"></i> GDAL</span>
+                            <span class="tech-tag"><i class="fab fa-python"></i> Python</span>
+                            <span class="tech-tag"><i class="fab fa-linux"></i> Linux</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/ibrahimakhalil2701/gdal-docker" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <button class="project-btn" onclick="showProjectDetails('gdal')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJET 6: GEO7630 Visualisation -->
+                <div class="project-card" data-category="webmapping recherche">
+                    <div class="project-preview">
+                        <div class="mini-map" id="projectMap6"></div>
+                        <div class="project-overlay">
+                            <span class="project-type">Formation</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Intégration & Visualisation de Données Géographiques</h3>
+                        <p class="project-description">
+                            Projet académique du cours GEO7630 à l'UQAM. Développement d'applications de visualisation 
+                            de données géographiques avec technologies web modernes.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fab fa-js"></i> JavaScript</span>
+                            <span class="tech-tag"><i class="fab fa-html5"></i> HTML/CSS</span>
+                            <span class="tech-tag"><i class="fas fa-map"></i> Leaflet</span>
+                            <span class="tech-tag"><i class="fas fa-chart-bar"></i> D3.js</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/ibrahimakhalil2701/geo7630h25" target="_blank" class="project-btn">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <button class="project-btn" onclick="showProjectDetails('geo7630')">
+                                <i class="fas fa-info-circle"></i> Détails
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU PROJET 7: Implantation BIXI Montréal -->
+                <div class="project-card" data-category="analyse webmapping">
+                    <div class="project-preview">
+                        <img src="assets/images/bixi.jpg" alt="Implantation BIXI" class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-type">Analyse</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Étude d'Implantation des Stations BIXI</h3>
+                        <p class="project-description">
+                            Analyse spatiale pour l'optimisation de l'implantation des stations de vélos en libre-service BIXI à Montréal. 
+                            Étude de la densité de population, accessibilité et couverture du réseau.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fas fa-map-marked"></i> QGIS</span>
+                            <span class="tech-tag"><i class="fab fa-python"></i> Python</span>
+                            <span class="tech-tag"><i class="fas fa-chart-area"></i> Analyse Spatiale</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="assets/Projet_implantation_bixi.pdf" download class="project-btn">
+                                <i class="fas fa-download"></i> PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU PROJET 8: Accessibilité Hôpitaux -->
+                <div class="project-card" data-category="analyse recherche">
+                    <div class="project-preview">
+                        <img src="assets/images/hopitaux.jpg" alt="Accessibilité Hôpitaux" class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-type">Recherche</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Accessibilité aux Services Hospitaliers Ottawa-Gatineau</h3>
+                        <p class="project-description">
+                            Documentation complète sur l'analyse d'accessibilité aux services hospitaliers dans la région d'Ottawa-Gatineau. 
+                            Méthodes d'analyse spatiale et cartographie des zones desservies.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fas fa-hospital"></i> Services Santé</span>
+                            <span class="tech-tag"><i class="fas fa-network-wired"></i> Network Analysis</span>
+                            <span class="tech-tag"><i class="fas fa-map"></i> SIG</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="assets/Documentation_Accessibilité_aux_Services_Hospitaliers.pdf" download="Accessibilite_Hopitaux_Mbacke.pdf" class="project-btn">
+                                <i class="fas fa-download"></i> PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU PROJET 9: Accessibilité Stations TER Dakar -->
+                <div class="project-card" data-category="analyse">
+                    <div class="project-preview">
+                        <img src="assets/images/ter.jpg" alt="TER Dakar" class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-type">Transport</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Accessibilité aux Stations TER de Dakar</h3>
+                        <p class="project-description">
+                            Étude d'accessibilité aux stations du Train Express Régional (TER) de Dakar, Sénégal. 
+                            Analyse de la couverture géographique et de l'accessibilité piétonne aux gares.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fas fa-train"></i> Transport</span>
+                            <span class="tech-tag"><i class="fas fa-draw-polygon"></i> Buffer</span>
+                            <span class="tech-tag"><i class="fas fa-chart-line"></i> Analyse</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="assets/Etude_Accessibilité_station_TER.pdf" download="Accessibilite_TER_Mbacke.pdf" class="project-btn">
+                                <i class="fas fa-download"></i> PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU PROJET 10: Localisation Écoles Montréal -->
+                <div class="project-card" data-category="analyse recherche">
+                    <div class="project-preview">
+                        <img src="assets/images/ecoles.jpg" alt="Écoles Montréal" class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-type">Éducation</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Rapport de Localisation des Écoles à Montréal</h3>
+                        <p class="project-description">
+                            Analyse de la distribution spatiale des établissements scolaires à Montréal. 
+                            Étude de la couverture géographique et de l'accessibilité aux services éducatifs.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fas fa-school"></i> Éducation</span>
+                            <span class="tech-tag"><i class="fas fa-map-marked-alt"></i> Cartographie</span>
+                            <span class="tech-tag"><i class="fas fa-chart-bar"></i> Statistiques</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="assets/Rapport_de_localisation_des_écoles_.pdf" download="Localisation_Ecoles_Mbacke.pdf" class="project-btn">
+                                <i class="fas fa-download"></i> PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU PROJET 11: Résilience Réseaux Routiers -->
+                <div class="project-card" data-category="analyse recherche">
+                    <div class="project-preview">
+                        <img src="assets/images/resilience.jpg" alt="Résilience Réseaux" class="project-image">
+                        <div class="project-overlay">
+                            <span class="project-type">Résilience</span>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Analyse Comparative de la Résilience des Réseaux Routiers Urbains</h3>
+                        <p class="project-description">
+                            Étude comparative de la résilience des réseaux routiers urbains face aux perturbations. 
+                            Analyse de robustesse et identification des points critiques.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-tag"><i class="fas fa-road"></i> Réseaux</span>
+                            <span class="tech-tag"><i class="fas fa-project-diagram"></i> Graphes</span>
+                            <span class="tech-tag"><i class="fas fa-shield-alt"></i> Résilience</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="assets/Analyse_comparative_de_la_résilience_des_réseaux_routiers_urbains.pdf" download="Resilience_Reseaux_Mbacke.pdf" class="project-btn">
+                                <i class="fas fa-download"></i> PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- VUE CONTACT -->
+        <section id="contactView" class="view-panel">
+            <div class="view-header">
+                <h2 class="section-title">
+                    <i class="fas fa-envelope"></i>
+                    Contact
+                </h2>
+                <p class="section-subtitle">Travaillons ensemble sur vos projets géospatiaux</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-map-wrapper">
+                    <div id="contactMap" class="leaflet-map"></div>
+                </div>
+                
+                <div class="contact-info-panel">
+                    <div class="info-card">
+                        <div class="info-header">
+                            <i class="fas fa-user-circle"></i>
+                            <h3>Informations de Contact</h3>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="info-content">
+                                <span class="info-label">Email</span>
+                                <a href="mailto:ibrahimakhalilmbacke2000@gmail.com">ibrahimakhalilmbacke2000@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <div class="info-content">
+                                <span class="info-label">Téléphone</span>
+                                <a href="tel:+14385435338">+1 (438) 543-5338</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="info-content">
+                                <span class="info-label">Localisation</span>
+                                <span>Montréal, QC, Canada</span>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fab fa-linkedin"></i>
+                            <div class="info-content">
+                                <span class="info-label">LinkedIn</span>
+                                <a href="https://www.linkedin.com/in/ibrahimakhalil-mbacke" target="_blank">ibrahimakhalil-mbacke</a>
+                            </div>
+                        </div>
+                        
+                        <div class="info-item">
+                            <i class="fab fa-github"></i>
+                            <div class="info-content">
+                                <span class="info-label">GitHub</span>
+                                <a href="https://github.com/ibrahimakhalil2701" target="_blank">ibrahimakhalil2701</a>
+                            </div>
+                        </div>
+
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/ibrahimakhalil-mbacke" target="_blank" class="social-link linkedin" title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/ibrahimakhalil2701" target="_blank" class="social-link github" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="mailto:ibrahimakhalilmbacke2000@gmail.com" class="social-link email" title="Email">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="#" class="social-link cv" id="downloadCVFooter" title="Télécharger CV">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+                        </div>
+
+                        <div class="availability-badge">
+                            <span class="badge-indicator"></span>
+                            Disponible pour de nouveaux projets
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Status Bar -->
+    <footer class="status-bar">
+        <div class="status-left">
+            <span><i class="fas fa-globe"></i> WGS 84 (EPSG:4326)</span>
+        </div>
+        <div class="status-center">
+            <span>© 2024 Ibrahimakhalil Mbacke | Portfolio Géomatique</span>
+        </div>
+        <div class="status-right">
+            <span id="currentCoords">📍 45.5017°N, 73.5673°W</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/onboarding.js"></script>
+</body>
+</html>
