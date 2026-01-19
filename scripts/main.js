@@ -686,7 +686,8 @@ function initProjectMaps() {
         { id: 'projectMap3', coords: [45.5017, -73.5673], zoom: 10 }, // Montréal général
         { id: 'projectMap4', coords: [45.5017, -73.5673], zoom: 12 }, // Vélo Montréal
         { id: 'projectMap5', coords: [45.5017, -73.5673], zoom: 3 },  // Global
-        { id: 'projectMap6', coords: [45.5017, -73.5673], zoom: 11 }  // Montréal GEO7630
+        { id: 'projectMap6', coords: [45.5017, -73.5673], zoom: 11 },  // Montréal GEO7630
+        { id: 'projectMap7', coords: [45.5017, -73.5673], zoom: 12 }  // 🆕 Tramway Montréal
     ];
     
     projectLocations.forEach(loc => {
@@ -899,7 +900,24 @@ function showProjectDetails(projectId) {
             ],
             technologies: ['JavaScript', 'Leaflet', 'D3.js', 'HTML/CSS', 'GitHub Pages'],
             github: 'https://github.com/ibrahimakhalil2701/geo7630h25'
-        }
+        },
+        'tramway': {
+        title: 'Étude de Faisabilité : Réseau de Tramway à Montréal',
+        description: 'Analyse spatiale multicritère approfondie de trois variantes de corridor pour l\'implantation d\'un réseau de tramway structurant à Montréal. Évaluation comparative basée sur la desserte de population, l\'impact environnemental, la connectivité réseau et l\'optimisation économique.',
+        features: [
+            'Analyse multicritère de 3 variantes de tracé',
+            'Desserte de population (125k-142k habitants)',
+            'Évaluation impact environnemental (espaces verts, arbres)',
+            'Connectivité avec réseau métro STM (6-12 lignes)',
+            'Zones tampons 500m autour des tracés',
+            'Cartographie professionnelle (MTM NAD83)',
+            'Modélisation spatiale avec ArcGIS Pro',
+            'Recommandations stratégiques basées sur données'
+        ],
+        technologies: ['ArcGIS Pro', 'QGIS', 'Python', 'Analyse Multicritère', 'Network Analyst', 'Spatial Join', 'Kernel Density'],
+        github: 'assets/Projet_Tramway_Montreal_Documentation.pdf'
+    }
+        
     };
     
     const project = projectDetails[projectId];
