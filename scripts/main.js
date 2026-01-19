@@ -740,7 +740,7 @@ function initContactMap() {
     if (!mapElement) return;
     
     contactMap = L.map('contactMap', {
-        center: [45.5017, -73.5673],
+        center: [48.8566, 2.3522],
         zoom: 12,
         zoomControl: true
     });
@@ -752,7 +752,7 @@ function initContactMap() {
     }).addTo(contactMap);
     
     // Marker principal
-    const mainMarker = L.circleMarker([45.5017, -73.5673], {
+   const mainMarker = L.circleMarker([48.8566, 2.3522], {
         radius: 15,
         fillColor: '#06B6D4',
         color: '#fff',
@@ -763,7 +763,7 @@ function initContactMap() {
     mainMarker.bindPopup(`
         <div style="font-family: -apple-system, sans-serif; color: #0F172A;">
             <h3 style="color: #06B6D4; margin-bottom: 0.5rem;">
-                📍 Montréal, QC
+                📍 Paris, FR
             </h3>
             <p style="margin: 0.5rem 0;">
                 <strong>Ibrahimakhalil Mbacke</strong><br>
@@ -771,7 +771,7 @@ function initContactMap() {
             </p>
             <p style="margin: 0.5rem 0; font-size: 0.9rem;">
                 📧 ibrahimakhalilmbacke2000@gmail.com<br>
-                📱 +1 (438) 543-5338
+                📱 +33 7 44 41 19 74
             </p>
         </div>
     `).openPopup();
