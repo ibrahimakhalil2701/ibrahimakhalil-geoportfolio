@@ -51,13 +51,6 @@ const locations = {
         name: 'Montréal - HEC',
         type: 'experience',
         zoom: 15
-    },
-    // 🆕 NOUVELLE ENTRÉE À AJOUTER ICI
-    'retour-france': {
-        coords: [48.8566, 2.3522],  // Coordonnées de Paris ou autre ville française
-        name: 'Retour en France',
-        type: 'experience',
-        zoom: 12
     }
 };
 
@@ -477,14 +470,8 @@ function initHeroMap() {
             name: 'Touba, Sénégal',
             type: 'projet',
             details: '<strong>💧 Analyse Hydrogéologique</strong><br>Détection eaux souterraines<br>QGIS, Analyse Raster'
-        },
-        {
-        coords: [48.8566, 2.3522],
-        name: 'Retour en France',
-        type: 'experience',
-        details: '<strong>🇫🇷 Retour en France</strong><br>Recherche d\'opportunités<br>Géomatique & SIG<br>2025'
-    }
-];
+        }
+    ];
     
     const markers = [];
     
