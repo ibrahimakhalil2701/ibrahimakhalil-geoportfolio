@@ -687,8 +687,8 @@ function initProjectMaps() {
         { id: 'projectMap4', coords: [45.5017, -73.5673], zoom: 12 }, // Vélo Montréal
         { id: 'projectMap5', coords: [45.5017, -73.5673], zoom: 3 },  // Global
         { id: 'projectMap6', coords: [45.5017, -73.5673], zoom: 11 },  // Montréal GEO7630
-        { id: 'projectMap7', coords: [45.5017, -73.5673], zoom: 12 }  // 🆕 Tramway Montréal
-        { id: 'projectMap8', coords: [48.8566, 2.3522], zoom: 12 }    // 🆕 Paris Chantiers
+        { id: 'projectMap7', coords: [45.5017, -73.5673], zoom: 12 },  // 🆕 Tramway Montréal
+        { id: 'projectMap8', coords: [48.8566, 2.3522], zoom: 12 }     // 🆕 Chantiers Paris
     ];
     
     projectLocations.forEach(loc => {
@@ -919,23 +919,19 @@ function showProjectDetails(projectId) {
         github: 'assets/Projet_Tramway_Montreal_Documentation.pdf'
     },
     'chantiers': {
-    title: 'Gestion des Chantiers - Réseau d\'Eau Potable Paris',
-    description: 'Application web professionnelle de gestion et suivi des interventions sur le réseau d\'eau potable de la ville de Paris. Développée avec ArcGIS Experience Builder, elle offre une interface intuitive pour visualiser, analyser et gérer les chantiers en temps réel.',
+    title: 'Gestion des Chantiers',
+    description: 'Application web professionnelle de gestion et suivi des interventions sur les chantiers de la ville de Paris. Développée avec ArcGIS Experience Builder, elle offre une interface intuitive pour visualiser, analyser et gérer les chantiers en temps réel.',
     features: [
         'Interface cartographique interactive et responsive',
-        'Gestion complète des chantiers (planification, suivi, clôture)',
-        'Visualisation du réseau d\'eau potable parisien',
-        'Tableaux de bord et statistiques en temps réel',
+        'Gestion des chantiers (suivi)',
+        'Visualisation des chantiers sur la ville de Paris',
+        'Tableaux de bord et statistiques',
         'Filtres avancés par type, statut, arrondissement',
-        'Formulaires de saisie intégrés (ArcGIS Online)',
-        'Gestion des pièces jointes et documents',
         'Architecture full-stack ArcGIS (Online + Experience Builder)'
     ],
     technologies: ['ArcGIS Experience Builder', 'ArcGIS Online', 'WebGIS', 'JavaScript', 'REST API', 'Responsive Design'],
     github: 'https://experience.arcgis.com/experience/f41fe86eeb6e480c919136140144aaf6d'
 }
-
-    
         
     };
     
