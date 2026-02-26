@@ -871,7 +871,7 @@ function showProjectDetails(projectId) {
                 'Export de données'
             ],
             technologies: ['JavaScript', 'Leaflet', 'Python', 'GeoJSON'],
-            github: 'https://github.com/ibrahimakhalil2701/pistes-cyclables-montreal'
+            Application: 'https://experience.arcgis.com/experience/7b3c5c0c8a7c4a3ab5bcd1219495aeaf'
         },
         'gdal': {
             title: 'Environnement GDAL Docker',
