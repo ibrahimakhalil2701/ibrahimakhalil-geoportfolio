@@ -688,7 +688,6 @@ function initProjectMaps() {
         { id: 'projectMap5', coords: [45.5017, -73.5673], zoom: 3 },  // Global
         { id: 'projectMap6', coords: [45.5017, -73.5673], zoom: 11 },  // Montréal GEO7630
         { id: 'projectMap7', coords: [45.5017, -73.5673], zoom: 12 },  // 🆕 Tramway Montréal
-        { id: 'projectMap8', coords: [48.8566, 2.3522], zoom: 12 }     // 🆕 Chantiers Paris
     ];
     
     projectLocations.forEach(loc => {
