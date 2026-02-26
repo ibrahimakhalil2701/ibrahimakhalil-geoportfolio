@@ -929,7 +929,7 @@ function showProjectDetails(projectId) {
         'Architecture full-stack ArcGIS (Online + Experience Builder)'
     ],
     technologies: ['ArcGIS Experience Builder', 'ArcGIS Online', 'WebGIS', 'JavaScript', 'REST API', 'Responsive Design'],
-    github: 'https://experience.arcgis.com/experience/f41fe86eeb6e480c919136140144aaf6d'
+    github: 'https://experience.arcgis.com/experience/f41fe86eeb6e480c91913614014aaf6d'
 }
         
     };
