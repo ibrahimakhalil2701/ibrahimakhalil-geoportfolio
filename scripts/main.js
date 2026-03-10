@@ -917,6 +917,26 @@ function showProjectDetails(projectId) {
         technologies: ['ArcGIS Pro', 'QGIS', 'Python', 'Analyse Multicritère', 'Network Analyst', 'Spatial Join', 'Kernel Density'],
         github: 'assets/Projet_Tramway_Montreal_Documentation.pdf'
     },
+    'senegal': {
+    title: 'Géoportail National du Sénégal',
+    description: 'Plateforme géospatiale nationale présentant les données du Sénégal organisées en 6 thématiques principales. Intègre les données démographiques de l\'ANSD (2013-2025) et les données géographiques d\'OpenStreetMap pour une couverture complète du territoire.',
+    features: [
+        'Interface Experience Builder moderne et intuitive',
+        '6 thématiques : Administration, Services, Transport, Environnement, POI, Urbanisme',
+        'Données administratives : régions, départements, communes',
+        'Services sociaux : santé, éducation',
+        'Transport : routes, rail, infrastructures',
+        'Environnement : hydrographie, nature, occupation du sol',
+        'Points d\'intérêt et bâtiments',
+        'Données démographiques ANSD 2013-2025',
+        'Cartographie OpenStreetMap',
+        'Multi-couches interactives avec légende dynamique',
+        'Recherche géographique intégrée',
+        'Partage public accessible à tous'
+    ],
+    technologies: ['ArcGIS Experience Builder', 'ArcGIS Online', 'Feature Layers', 'OpenStreetMap', 'ANSD Data', 'Web Mapping'],
+    github: 'https://experience.arcgis.com/experience/07eb6e11b4ac40a2a5c6e84f654ea3c8/'
+},
     'chantiers': {
     title: 'Gestion des Chantiers',
     description: 'Application web professionnelle de gestion et suivi des interventions sur les chantiers de la ville de Paris. Développée avec ArcGIS Experience Builder, elle offre une interface intuitive pour visualiser, analyser et gérer les chantiers en temps réel.',
